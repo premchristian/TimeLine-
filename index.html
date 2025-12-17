@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown to 15 July</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .countdown-container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .time-box small {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="countdown-container">
+    <h1>Countdown to 15 July</h1>
+    <div class="countdown">
+        <div class="time-box">
+            <span id="days">0</span>
+            <small>DAYS</small>
+        </div>
+        <div class="time-box">
+            <span id="hours">0</span>
+            <small>HOURS</small>
+        </div>
+        <div class="time-box">
+            <span id="minutes">0</span>
+            <small>MINUTES</small>
+        </div>
+        <div class="time-box">
+            <span id="seconds">0</span>
+            <small>SECONDS</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getTargetDate() {
+        const now = new Date();
+        let year = now.getFullYear();
+        let target = new Date(year, 6, 15, 0, 0, 0); // July = 6
+
+        // If July 15 has already passed, use next year
+        if (now > target) {
+            target = new Date(year + 1, 6, 15, 0, 0, 0);
+        }
+        return target;
+    }
+
+    const targetDate = getTargetDate();
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            document.querySelector(".countdown").innerHTML = "<h2>🎉 Time Reached!</h2>";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
